@@ -5,7 +5,7 @@ import { Entity } from '@/core/entities/entity'
 import { Optional } from '@/core/types/optional'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 
-interface QuestionProps {
+export interface QuestionProps {
   slug: Slug
   title: string
   content: string
@@ -52,14 +52,14 @@ export class Question extends Entity<QuestionProps> {
     return this.content.substring(0, 120).trimEnd().concat('...')
   }
 
-  set bestAnswerId(bestAnswerId: UniqueEntityID | undefined) {
-    this.props.bestAnswerId = bestAnswerId
-    this.touch()
-  }
-
   set title(title: string) {
     this.props.title = title
     this.props.slug = Slug.createFromText(title)
+    this.touch()
+  }
+
+  set bestAnswerId(bestAnswerId: UniqueEntityID | undefined) {
+    this.props.bestAnswerId = bestAnswerId
     this.touch()
   }
 
@@ -74,7 +74,7 @@ export class Question extends Entity<QuestionProps> {
 
   static create(
     props: Optional<QuestionProps, 'createdAt' | 'slug'>,
-    id?: UniqueEntityID
+    id?: UniqueEntityID,
   ) {
     const question = new Question(
       {
@@ -82,7 +82,7 @@ export class Question extends Entity<QuestionProps> {
         slug: props.slug ?? Slug.createFromText(props.title),
         createdAt: new Date(),
       },
-      id
+      id,
     )
 
     return question
