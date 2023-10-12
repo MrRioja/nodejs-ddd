@@ -1,5 +1,4 @@
 import { makeQuestion } from 'test/factories/make-question'
-import { Slug } from '../../enterprise/entities/values-objects/slug'
 import { FetchRecentQuestionsUseCase } from './fetch-recent-questions'
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 
@@ -12,7 +11,7 @@ describe('Fetch Recent Questions', () => {
     sut = new FetchRecentQuestionsUseCase(inMemoryQuestionsRepository)
   })
 
-  it('should be fetch recent questions', async () => {
+  it('should be able to fetch recent questions', async () => {
     await inMemoryQuestionsRepository.create(
       makeQuestion({ createdAt: new Date(2022, 0, 20) }),
     )
@@ -36,7 +35,7 @@ describe('Fetch Recent Questions', () => {
     ])
   })
 
-  it('should be fetch paginated recent questions', async () => {
+  it('should be able to fetch paginated recent questions', async () => {
     for (let i = 0; i < 23; i++) {
       await inMemoryQuestionsRepository.create(makeQuestion())
     }
