@@ -2,6 +2,7 @@ import { Either, left, right } from '@/core/either'
 import { NotAllowedError } from './errors/not-allowed-error'
 import { AnswersRepository } from '../repositories/answers-repository'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { InMemoryAnswerAttachmentsRepository } from 'test/repositories/in-memory-answer-attachments-repository'
 
 interface DeleteAnswerUseCaseRequest {
   authorId: string
@@ -14,7 +15,10 @@ type DeleteAnswerUseCaseResponse = Either<
 >
 
 export class DeleteAnswerUseCase {
-  constructor(private answerRepository: AnswersRepository) {}
+  constructor(
+    private answerRepository: AnswersRepository,
+    private answerAttachmentsRepository: InMemoryAnswerAttachmentsRepository,
+  ) {}
 
   async execute({
     authorId,
